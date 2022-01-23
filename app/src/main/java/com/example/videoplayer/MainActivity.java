@@ -26,7 +26,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements VideoRVAdapter.VideoClickInterface {
     RecyclerView videoRV;
     VideoRVAdapter rvAdapter;
-    ArrayList<VideoRVModel> videoRVModelList;
+    List<VideoRVModel> videoRVModelList;
     private static final int STORAGE_PERMISSION = 101;
 
     @Override
@@ -52,10 +52,10 @@ public class MainActivity extends AppCompatActivity implements VideoRVAdapter.Vi
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode==STORAGE_PERMISSION){
             if (grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Permission Granted!", Toast.LENGTH_LONG).show();
                 getVideos();
             }else {
-                Toast.makeText(this, "The App will not work without permission...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "The App will not work without permission...", Toast.LENGTH_LONG).show();
                 finish();
             }
         }
@@ -71,8 +71,9 @@ public class MainActivity extends AppCompatActivity implements VideoRVAdapter.Vi
             do {
                 @SuppressLint("Range") String videoTitle = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE));
                 @SuppressLint("Range") String videoPath = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
-                @SuppressLint("Range") Bitmap videoThumbnail = ThumbnailUtils.createVideoThumbnail(videoPath,MediaStore.Images.Thumbnails.MINI_KIND);
+                Bitmap videoThumbnail = ThumbnailUtils.createVideoThumbnail(videoPath,MediaStore.Images.Thumbnails.MINI_KIND);
 
+//                videoRVModelList.add(new VideoRVModel(videoTitle,videoPath,videoThumbnail));
                 videoRVModelList.add(new VideoRVModel(videoTitle,videoPath,videoThumbnail));
             }while (cursor.moveToNext());
         }

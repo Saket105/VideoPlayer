@@ -11,14 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class VideoRVAdapter extends RecyclerView.Adapter<VideoRVAdapter.ViewHolder> {
 
-    private ArrayList<VideoRVModel> videoRVModelArrayList;
+    private List<VideoRVModel> videoRVModelArrayList;
     private Context context;
     private VideoClickInterface videoClickInterface;
 
-    public VideoRVAdapter(ArrayList<VideoRVModel> videoRVModelArrayList, Context context, VideoClickInterface videoClickInterface) {
+    public VideoRVAdapter(List<VideoRVModel> videoRVModelArrayList, Context context, VideoClickInterface videoClickInterface) {
         this.videoRVModelArrayList = videoRVModelArrayList;
         this.context = context;
         this.videoClickInterface = videoClickInterface;
@@ -27,14 +28,14 @@ public class VideoRVAdapter extends RecyclerView.Adapter<VideoRVAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_rv_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_rv_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         VideoRVModel videoRVModel = videoRVModelArrayList.get(position);
-        holder.imageView.setImageBitmap(videoRVModel.getThumbnail());
+        holder.thumbnailIV.setImageBitmap(videoRVModel.getThumbnail());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,18 +49,18 @@ public class VideoRVAdapter extends RecyclerView.Adapter<VideoRVAdapter.ViewHold
         return videoRVModelArrayList.size();
     }
 
-    public interface VideoClickInterface{
-        void onVideoClick(int position);
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView imageView;
+        ImageView thumbnailIV;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            imageView = itemView.findViewById(R.id.idIVThumbnail);
+            thumbnailIV = itemView.findViewById(R.id.idIVThumbnail);
         }
+    }
+
+    public interface VideoClickInterface {
+        void onVideoClick(int position);
     }
 }
