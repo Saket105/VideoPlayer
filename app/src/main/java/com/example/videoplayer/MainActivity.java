@@ -35,14 +35,21 @@ public class MainActivity extends AppCompatActivity implements VideoRVAdapter.Vi
         setContentView(R.layout.activity_main);
 
         videoRV = findViewById(R.id.idRVVideos);
+
         videoRVModelList = new ArrayList<>();
+
         rvAdapter = new VideoRVAdapter(videoRVModelList,this,this::onVideoClick);
 
         videoRV.setLayoutManager(new GridLayoutManager(this,2));
+
         videoRV.setAdapter(rvAdapter);
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED)
+        {
             ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},STORAGE_PERMISSION);
-        }else{
+        }
+        else
+            {
             getVideos();
         }
     }
